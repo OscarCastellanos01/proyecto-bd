@@ -1,0 +1,65 @@
+Optimizacion
+
+    Tablas propuestas
+
+        //Referencia hacia detalle inventario para agregar una descripcion del estado fisico del producto y llevar un conteo para la diferencia con stock
+        reconteoInventario
+            id_producto
+            id_detalle_inventario
+            conteo_detalle
+            descripcion_producto
+        
+        //Tabla paises
+        paises
+            id_pais
+            nombre
+            codigo_pais
+        
+        //Agregando relacion entre pais a deapartamentos (tabla existe)
+
+        //Tabla aldeas_caserios relacion a municipio (existe) mediante id_municipio 
+        aldeas_caserios
+            id_aldea_caserio
+            nombre
+            id_municipio
+
+        //Tabla sucursal
+        sucursal    
+            id_sucursal
+            nombre
+            id_pais
+            id_departamento
+            id_municipio
+            telefono
+            email
+            estado_sucursal
+
+    Tablas a eliminar
+
+        //Grupo garantias
+        Reparacion
+        Tipo Reparacion
+        Modelo
+        Equipo
+        MarcaEquipo
+        tEquipo
+
+        //productos
+        TipoProducto
+            Redundancia de datos ya que se puede agrupar utilizando categorias y subcategorias
+        
+        //Temporales
+        InventarioTemp
+        DetalleInventarioTemp
+
+    Traslados de columnas
+
+        Estado categoria
+            Trasladar de tabla detalle inventario a tabla categoria
+    
+    Relaciones a eliminar
+
+        Entre DetalleInventario y subcategorias
+            subcategoriasTargget
+            subcategoriasSource
+            
