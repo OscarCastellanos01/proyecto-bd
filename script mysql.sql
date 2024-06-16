@@ -16555,6 +16555,7 @@ DELIMITER ;
 
 CALL registrar_actualizacion('nombre_tabla', 123, 'valor_antiguo', 'valor_nuevo');
 
+
 /* ----- Deteccion ----- */
 
 
