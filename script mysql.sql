@@ -2,7 +2,7 @@
 /* SET ANSI_NULLS ON */
  
 /* SET QUOTED_IDENTIFIER ON */
- 
+
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE `tbl_Producto`(
 	`id_producto` int NOT NULL,
@@ -5400,7 +5400,6 @@ p_costo Decimal(15,4)
 //
 
 DELIMITER ;
-
 	
  
 /* SQLINES DEMO *** redProcedure [dbo].[SP_Actualizar_productoPrecioCosto]    Script Date: 1/06/2024 17:24:58 ******/
@@ -16503,3 +16502,75 @@ END;
 //
 
 DELIMITER ;
+
+
+
+
+
+-- EXAMEN FINAL YOSSY RODAS
+--
+--
+
+ALTER TABLE `tbl_bitacora`
+ADD COLUMN `id_user` VARCHAR(50) NULL;
+
+ALTER TABLE `tbl_bitacora`
+ADD COLUMN `tabla_modificada` VARCHAR(50) NULL;
+
+ALTER TABLE `tbl_bitacora`
+ADD COLUMN `usuario_ip` VARCHAR(50) NULL;
+
+ALTER TABLE `tbl_bitacora`
+ADD COLUMN `m_bitacora` VARCHAR(50);
+
+
+
+-- Eliminación de columna hora de la tabla bitacora
+ALTER TABLE `tbl_bitacora`
+DROP COLUMN `hora_bitacora`;
+
+-- modificacion de colimna fecha
+ALTER TABLE `tbl_bitacora`
+CHANGE COLUMN `fecha_bitacora` `horafecha_bitacora` DATETIME(3);
+
+-- STORE PROCEDURE
+DELIMITER //
+
+CREATE PROCEDURE SP_bitacora_actividad(
+    IN usuario VARCHAR(255),
+    IN accion_bitacora LONGTEXT,
+    IN usuario_ip VARCHAR(45),
+    IN mbitacora VARCHAR(255),
+    IN tabla_modificada VARCHAR(50)
+)
+BEGIN
+    INSERT INTO tbl_bitacora (
+		usuario_ip,
+		accion_bitacora,
+        m_bitacora,
+        horafecha_bitacora,
+        usuario,
+        tabla_modificada
+    ) VALUES (
+        NOW(3),
+        usuario,
+        accion_bitacora,
+        usuario_ip,
+        m_bitacora,
+        tabla_modificada
+    );
+END //
+
+DELIMITER ;
+
+-- datos para comprobar 
+CALL SP_bitacora_actividad('pepito	', 'INSERT', '192.160.2.2', 'Inventario>productos ', 'tbl_Producto');
+CALL SP_bitacora_actividad('pedro', 'UPDATE', '192.148.10.1', 'Inventario->productos->eliminar', 'tbl_Producto');
+CALL SP_bitacora_actividad('pedro', 'INSERT', '192.148.10.1', 'Inventario->productos->agregar', 'tbl_Producto');
+CALL SP_bitacora_actividad('pepito', 'DELETE', '192.160.2.2', 'Inventario->productos', 'tbl_Producto');
+
+CALL SP_bitacora_actividad('Danery', 'INSERT', '172.168.1.5', 'Sales>POS', 'tbl_venta');
+CALL SP_bitacora_actividad('Armando', 'INSERT', '130.212.10.22', 'Sales>POS', 'tbl_venta');
+CALL SP_bitacora_actividad('Juan', 'UPDATE', '130.150.20.2', 'Sales>POS', 'tbl_venta');
+CALL SP_bitacora_actividad('Yossy', 'UPDATE', '168.23.2.5', 'Sales>POS', 'tbl_venta');
+
