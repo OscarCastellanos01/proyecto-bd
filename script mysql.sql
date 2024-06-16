@@ -16503,3 +16503,62 @@ END;
 //
 
 DELIMITER ;
+
+-- EXAMEN FINAL
+
+-- MODIFICACION DE LA TABLA tbl_bitacora
+ALTER TABLE `tbl_bitacora`
+ADD COLUMN `ip_usuario` VARCHAR(45) NULL,
+ADD COLUMN `modulo_bitacora` VARCHAR(255) NULL;
+
+ALTER TABLE `tbl_bitacora`
+ADD COLUMN `tabla_afectada` VARCHAR(50) NULL;
+
+-- ELIMINACION DEL CAMPO hora_bitacora, ya que se captura la hora desde la fecha
+ALTER TABLE `tbl_bitacora`
+DROP COLUMN `hora_bitacora`;
+
+-- CAMBIO DEL NOMBRE DEL CAMPO fecha_bitacora
+ALTER TABLE `tbl_bitacora`
+CHANGE COLUMN `fecha_bitacora` `fecha_hora_bitacora` DATETIME(3);
+
+-- DROP PROCEDURE IF EXISTS sp_registrar_bitacora;
+
+-- PROCEDIMIENTO ALMACENADO PARA ALMACENAR LA BITACORA
+DELIMITER //
+
+CREATE PROCEDURE sp_registrar_bitacora(
+    IN usuario VARCHAR(255),
+    IN accion_bitacora LONGTEXT,
+    IN ip_usuario VARCHAR(45),
+    IN modulo_bitacora VARCHAR(255),
+    IN tabla_afectada VARCHAR(50)
+)
+BEGIN
+    INSERT INTO tbl_bitacora (
+        fecha_hora_bitacora,
+        usuario,
+        accion_bitacora,
+        ip_usuario,
+        modulo_bitacora,
+        tabla_afectada
+    ) VALUES (
+        NOW(3),
+        usuario,
+        accion_bitacora,
+        ip_usuario,
+        modulo_bitacora,
+        tabla_afectada
+    );
+END //
+
+DELIMITER ;
+
+-- EJECUTAR PROCEDIMIENTO ALMACENADO
+CALL sp_registrar_bitacora('Oscar Castellanos', 'INSERT', '192.168.1.1', 'Inventario>articulos', 'tbl_Producto');
+CALL sp_registrar_bitacora('Luis Enrique', 'UPDATE', '192.150.20.3', 'Inventario>articulos>editar', 'tbl_Producto');
+CALL sp_registrar_bitacora('Oscar Castellanos', 'DELETE', '192.168.1.1', 'Inventario>articulos', 'tbl_Producto');
+
+CALL sp_registrar_bitacora('Lusvin Perez', 'INSERT', '172.654.2.3', 'Ventas>pos', 'tbl_venta');
+CALL sp_registrar_bitacora('Silvia Cordero', 'UPDATE', '129.510.20.3', 'Ventas>pos', 'tbl_venta');
+CALL sp_registrar_bitacora('Erick Rodriguez', 'UPDATE', '789.231.3.4', 'Ventas>pos', 'tbl_venta');
