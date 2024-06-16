@@ -1,8 +1,8 @@
 /* SQLINES DEMO *** le [dbo].[tbl_Producto]    Script Date: 1/06/2024 17:24:57 ******/
 /* SET ANSI_NULLS ON */
- 
+ CREATE DATABASE AplicationComercial;
+USE AplicationComercial;
 /* SET QUOTED_IDENTIFIER ON */
- 
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE `tbl_Producto`(
 	`id_producto` int NOT NULL,
@@ -277,130 +277,130 @@ CREATE TABLE `tbl_banco`(
 /* SET QUOTED_IDENTIFIER ON */
  
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_barra`(
-	`id_producto` int NOT NULL,
-	`barra` bigint NOT NULL,
- CONSTRAINT `PK_tbl_barra` PRIMARY KEY 
-(
-	`id_producto` ASC,
-	`barra` ASC
-) 
-);
-/* SQLINES DEMO *** le [dbo].[tbl_bitacora]    Script Date: 1/06/2024 17:24:57 ******/
-/* SET ANSI_NULLS ON */
- 
-/* SET QUOTED_IDENTIFIER ON */
- 
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_bitacora`(
-	`id_bitacora` int AUTO_INCREMENT NOT NULL,
-	`fecha_bitacora` datetime(3) NULL,
-	`usuario` varchar(255) NULL,
-	`accion_bitacora` Longtext NULL,
-	`hora_bitacora` Longtext NULL,
-PRIMARY KEY 
-(
-	`id_bitacora` ASC
-) 
-) ;
-/* SQLINES DEMO *** le [dbo].[tbl_bodega]    Script Date: 1/06/2024 17:24:57 ******/
-/* SET ANSI_NULLS ON */
- 
-/* SET QUOTED_IDENTIFIER ON */
- 
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_bodega`(
-	`id_bodega` int NOT NULL,
-	`nombre_bodega` Longtext NULL,
-	`id_sucursal` int NOT NULL,
- CONSTRAINT `PK_tbl_bodega` PRIMARY KEY 
-(
-	`id_bodega` ASC
-) 
-) ;
-/* SQLINES DEMO *** le [dbo].[tbl_CajaDiaria]    Script Date: 1/06/2024 17:24:57 ******/
-/* SET ANSI_NULLS ON */
- 
-/* SET QUOTED_IDENTIFIER ON */
- 
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_CajaDiaria`(
-	`id_movimiento` int AUTO_INCREMENT NOT NULL,
-	`fecha_movimiento` datetime(3) NOT NULL,
-	`id_caja` int NOT NULL,
-	`montoApertura_movimiento` Decimal(15,4) NOT NULL,
-	`ingreso_movimiento` Decimal(15,4) NOT NULL,
-	`ingresoCheque_movimiento` Decimal(15,4) NOT NULL,
-	`ingresoTarjeta_movimiento` Decimal(15,4) NOT NULL,
-	`egreso_movimiento` Decimal(15,4) NOT NULL,
-	`cierre_movimiento` Decimal(15,4) NOT NULL,
-	`saldo_movimiento` Decimal(15,4) NOT NULL,
-	`estado_movimiento` int NOT NULL,
- CONSTRAINT `PK_tbl_CajaDiaria` PRIMARY KEY 
-(
-	`id_movimiento` ASC
-) 
-);
-/* SQLINES DEMO *** le [dbo].[tbl_cajas]    Script Date: 1/06/2024 17:24:57 ******/
-/* SET ANSI_NULLS ON */
- 
-/* SET QUOTED_IDENTIFIER ON */
- 
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_cajas`(
-	`id_caja` int NOT NULL,
-	`descripcion_caja` Longtext NOT NULL,
- CONSTRAINT `PK_tbl_cajas` PRIMARY KEY 
-(
-	`id_caja` ASC
-) 
-) ;
-/* SQLINES DEMO *** le [dbo].[tbl_calculoPrecioVenta]    Script Date: 1/06/2024 17:24:57 ******/
-/* SET ANSI_NULLS ON */
- 
-/* SET QUOTED_IDENTIFIER ON */
- 
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_calculoPrecioVenta`(
-	`id_calculo` int AUTO_INCREMENT NOT NULL,
-	`fecha_calculo` datetime(3) NOT NULL,
-	`descripcion_calculo` Longtext NULL,
-	`precio_costo` Decimal(15,4) NULL,
-	`envio_costo` Decimal(15,4) NULL,
-	`ganacia_promedio` Double NULL,
-	`costo_total` Decimal(15,4) NULL,
-	`precio_venta` Decimal(15,4) NULL,
-	`precioSinIva_venta` Decimal(15,4) NULL,
-	`iva_calculado` Decimal(15,4) NULL,
-	`isr_calculado` Decimal(15,4) NULL,
-	`iso_calculado` Decimal(15,4) NULL,
-	`total_impuesto` Decimal(15,4) NULL,
-	`ganancia_real` Decimal(15,4) NULL,
- CONSTRAINT `PK_tbl_calculoPrecioVenta` PRIMARY KEY 
-(
-	`id_calculo` ASC
-) 
-) ;
-/* SQLINES DEMO *** le [dbo].[tbl_cliente]    Script Date: 1/06/2024 17:24:57 ******/
-/* SET ANSI_NULLS ON */
- 
-/* SET QUOTED_IDENTIFIER ON */
- 
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_cliente`(
-	`id_cliente` int NOT NULL,
-	`nit_cliente` Longtext NOT NULL,
-	`nombre_cliente` Longtext NOT NULL,
-	`id_municipio` int NULL,
-	`direccion_cliente` Longtext NOT NULL,
-	`telefono1_cliente` nvarchar(20) NULL,
-	`telefono2_cliente` nvarchar(20) NULL,
-	`email_cliente` Longtext NULL,
-	`notas_cliente` Longtext NULL,
- CONSTRAINT `PK_tbl_cliente` PRIMARY KEY 
-(
-	`id_cliente` ASC
-) 
+	CREATE TABLE `tbl_barra`(
+		`id_producto` int NOT NULL,
+		`barra` bigint NOT NULL,
+	 CONSTRAINT `PK_tbl_barra` PRIMARY KEY 
+	(
+		`id_producto` ASC,
+		`barra` ASC
+	) 
+	);
+	/* SQLINES DEMO *** le [dbo].[tbl_bitacora]    Script Date: 1/06/2024 17:24:57 ******/
+	/* SET ANSI_NULLS ON */
+	 
+	/* SET QUOTED_IDENTIFIER ON */
+	 
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	CREATE TABLE `tbl_bitacora`(
+		`id_bitacora` int AUTO_INCREMENT NOT NULL,
+		`fecha_bitacora` datetime(3) NULL,
+		`usuario` varchar(255) NULL,
+		`accion_bitacora` Longtext NULL,
+		`hora_bitacora` Longtext NULL,
+	PRIMARY KEY 
+	(
+		`id_bitacora` ASC
+	) 
+	) ;
+	/* SQLINES DEMO *** le [dbo].[tbl_bodega]    Script Date: 1/06/2024 17:24:57 ******/
+	/* SET ANSI_NULLS ON */
+	 
+	/* SET QUOTED_IDENTIFIER ON */
+	 
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	CREATE TABLE `tbl_bodega`(
+		`id_bodega` int NOT NULL,
+		`nombre_bodega` Longtext NULL,
+		`id_sucursal` int NOT NULL,
+	 CONSTRAINT `PK_tbl_bodega` PRIMARY KEY 
+	(
+		`id_bodega` ASC
+	) 
+	) ;
+	/* SQLINES DEMO *** le [dbo].[tbl_CajaDiaria]    Script Date: 1/06/2024 17:24:57 ******/
+	/* SET ANSI_NULLS ON */
+	 
+	/* SET QUOTED_IDENTIFIER ON */
+	 
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	CREATE TABLE `tbl_CajaDiaria`(
+		`id_movimiento` int AUTO_INCREMENT NOT NULL,
+		`fecha_movimiento` datetime(3) NOT NULL,
+		`id_caja` int NOT NULL,
+		`montoApertura_movimiento` Decimal(15,4) NOT NULL,
+		`ingreso_movimiento` Decimal(15,4) NOT NULL,
+		`ingresoCheque_movimiento` Decimal(15,4) NOT NULL,
+		`ingresoTarjeta_movimiento` Decimal(15,4) NOT NULL,
+		`egreso_movimiento` Decimal(15,4) NOT NULL,
+		`cierre_movimiento` Decimal(15,4) NOT NULL,
+		`saldo_movimiento` Decimal(15,4) NOT NULL,
+		`estado_movimiento` int NOT NULL,
+	 CONSTRAINT `PK_tbl_CajaDiaria` PRIMARY KEY 
+	(
+		`id_movimiento` ASC
+	) 
+	);
+	/* SQLINES DEMO *** le [dbo].[tbl_cajas]    Script Date: 1/06/2024 17:24:57 ******/
+	/* SET ANSI_NULLS ON */
+	 
+	/* SET QUOTED_IDENTIFIER ON */
+	 
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	CREATE TABLE `tbl_cajas`(
+		`id_caja` int NOT NULL,
+		`descripcion_caja` Longtext NOT NULL,
+	 CONSTRAINT `PK_tbl_cajas` PRIMARY KEY 
+	(
+		`id_caja` ASC
+	) 
+	) ;
+	/* SQLINES DEMO *** le [dbo].[tbl_calculoPrecioVenta]    Script Date: 1/06/2024 17:24:57 ******/
+	/* SET ANSI_NULLS ON */
+	 
+	/* SET QUOTED_IDENTIFIER ON */
+	 
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	CREATE TABLE `tbl_calculoPrecioVenta`(
+		`id_calculo` int AUTO_INCREMENT NOT NULL,
+		`fecha_calculo` datetime(3) NOT NULL,
+		`descripcion_calculo` Longtext NULL,
+		`precio_costo` Decimal(15,4) NULL,
+		`envio_costo` Decimal(15,4) NULL,
+		`ganacia_promedio` Double NULL,
+		`costo_total` Decimal(15,4) NULL,
+		`precio_venta` Decimal(15,4) NULL,
+		`precioSinIva_venta` Decimal(15,4) NULL,
+		`iva_calculado` Decimal(15,4) NULL,
+		`isr_calculado` Decimal(15,4) NULL,
+		`iso_calculado` Decimal(15,4) NULL,
+		`total_impuesto` Decimal(15,4) NULL,
+		`ganancia_real` Decimal(15,4) NULL,
+	 CONSTRAINT `PK_tbl_calculoPrecioVenta` PRIMARY KEY 
+	(
+		`id_calculo` ASC
+	) 
+	) ;
+	/* SQLINES DEMO *** le [dbo].[tbl_cliente]    Script Date: 1/06/2024 17:24:57 ******/
+	/* SET ANSI_NULLS ON */
+	 
+	/* SET QUOTED_IDENTIFIER ON */
+	 
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	CREATE TABLE `tbl_cliente`(
+		`id_cliente` int NOT NULL,
+		`nit_cliente` Longtext NOT NULL,
+		`nombre_cliente` Longtext NOT NULL,
+		`id_municipio` int NULL,
+		`direccion_cliente` Longtext NOT NULL,
+		`telefono1_cliente` nvarchar(20) NULL,
+		`telefono2_cliente` nvarchar(20) NULL,
+		`email_cliente` Longtext NULL,
+		`notas_cliente` Longtext NULL,
+	 CONSTRAINT `PK_tbl_cliente` PRIMARY KEY 
+	(
+		`id_cliente` ASC
+	) 
 ) ;
 /* SQLINES DEMO *** le [dbo].[tbl_conceptos]    Script Date: 1/06/2024 17:24:57 ******/
 /* SET ANSI_NULLS ON */
