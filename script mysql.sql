@@ -16508,7 +16508,7 @@ DELIMITER ;
 
 
 -- EXAMEN FINAL YOSSY RODAS
---
+-- 
 --
 
 ALTER TABLE `tbl_bitacora`
