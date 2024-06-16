@@ -286,23 +286,7 @@ CREATE TABLE `tbl_barra`(
 	`barra` ASC
 ) 
 );
-/* SQLINES DEMO *** le [dbo].[tbl_bitacora]    Script Date: 1/06/2024 17:24:57 ******/
-/* SET ANSI_NULLS ON */
- 
-/* SET QUOTED_IDENTIFIER ON */
- 
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE `tbl_bitacora`(
-	`id_bitacora` int AUTO_INCREMENT NOT NULL,
-	`fecha_bitacora` datetime(3) NULL,
-	`usuario` varchar(255) NULL,
-	`accion_bitacora` Longtext NULL,
-	`hora_bitacora` Longtext NULL,
-PRIMARY KEY 
-(
-	`id_bitacora` ASC
-) 
-) ;
+
 /* SQLINES DEMO *** le [dbo].[tbl_bodega]    Script Date: 1/06/2024 17:24:57 ******/
 /* SET ANSI_NULLS ON */
  
@@ -16503,3 +16487,72 @@ END;
 //
 
 DELIMITER ;
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------EXAMEN FINAL---------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ----- Tabla ----- */
+CREATE TABLE `tbl_bitacora`(
+	`id` int AUTO_INCREMENT NOT NULL,
+	`user` Varchar NULL,
+	`fecha_bitacora` date NULL,
+	`registro_bitacora` Longtext NULL,
+	`hora_bitacora` time NULL,
+PRIMARY KEY 
+(
+	`id` ASC
+) 
+) ;
+
+/* ----- SP ----- */
+DELIMITER $$
+
+CREATE PROCEDURE registrar_actualizacion(
+    IN _tabla VARCHAR(50),
+    IN _id_registro INT,
+    IN _campo_antiguo VARCHAR(255),
+    IN _campo_nuevo VARCHAR(255)
+)
+BEGIN
+
+    -- Obtener el usuario actual
+    SET @usuario = CURRENT_USER();
+
+    -- Obtener la fecha y hora actual
+    SET @fecha_bitacora = CURDATE();
+    SET @hora_bitacora = CURTIME();
+
+    -- Generar el registro para la bitácora
+    SET @registro_bitacora = CONCAT(
+        'Tabla: ', _tabla, '\n',
+        'ID registro: ', _id_registro, '\n',
+        'Campo modificado: ', _campo_antiguo, '\n',
+        'Valor anterior: ', _campo_nuevo, '\n',
+        'Usuario: ', @usuario, '\n',
+        'Fecha: ', @fecha_bitacora, '\n',
+        'Hora: ', @hora_bitacora
+    );
+
+    -- Insertar el registro en la tabla bitácora
+    INSERT INTO tbl_bitacora (
+        user,
+        fecha_bitacora,
+        registro_bitacora,
+        hora_bitacora
+    )
+    VALUES (
+        @usuario,
+        @fecha_bitacora,
+        @registro_bitacora,
+        @hora_bitacora
+    );
+
+END$$
+
+DELIMITER ;
+
+/* ----- Llamado al Sp para realizar el regstro ----- */
+
+CALL registrar_actualizacion('nombre_tabla', 123, 'valor_antiguo', 'valor_nuevo');
+
+/* ----- Failover ----- */
