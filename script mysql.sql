@@ -16555,4 +16555,71 @@ DELIMITER ;
 
 CALL registrar_actualizacion('nombre_tabla', 123, 'valor_antiguo', 'valor_nuevo');
 
-/* ----- Failover ----- */
+/* ----- Deteccion ----- */
+
+
+
+function detectar_fallo_maestro() {
+
+  mysql -u root -p$MASTER_PASSWORD -h$MASTER_HOST -e "SELECT 1" > /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Maestro no disponible. Iniciando failover..."
+    return 0
+  else
+    echo "Maestro disponible. No se requiere failover."
+    return 1
+  fi
+}
+
+
+
+/* ----- failover ----- */
+
+
+
+
+function realizar_failover() {
+  echo "Deteniendo la replicación..."
+  mysql -u root -p$REPLICA_PASSWORD -h$REPLICA_HOST -e "STOP SLAVE"
+
+  echo "Promoviendo la réplica a maestro..."
+  mysql -u root -p$REPLICA_PASSWORD -h$REPLICA_HOST -e "CHANGE MASTER TO MASTER_HOST='$REPLICA_HOST', MASTER_USER='$REPLICA_USER', MASTER_PASSWORD='$REPLICA_PASSWORD', MASTER_LOG_FILE='$REPLICA_LOG_FILE', MASTER_LOG_POS='<span class="math-inline">REPLICA\_LOG\_POS'"
+
+for replica in "</span>{REPLICAS[@]}"; do
+    echo "Actualizando configuración de replicación en réplica $replica..."
+    ssh $replica "mysql -u root -p$REPLICA_PASSWORD -e \"CHANGE MASTER TO MASTER_HOST='$REPLICA_HOST', MASTER_USER='$REPLICA_USER', MASTER_PASSWORD='$REPLICA_PASSWORD', MASTER_LOG_FILE='$REPLICA_LOG_FILE', MASTER_LOG_POS='$REPLICA_LOG_POS'\""
+  done
+
+  echo "Actualizando aplicaciones para conectarse al nuevo maestro..."
+
+}
+
+function detectar_failover_exitoso() {
+
+  mysql -u root -p$REPLICA_PASSWORD -h$REPLICA_HOST -e "SHOW MASTER STATUS" | grep "Replicating: Master" > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "Failover exitoso. Réplica replicando desde sí misma."
+    return 0
+  else
+    echo "Failover no exitoso. Revise la configuración y los logs."
+    return 1
+  fi
+}
+
+
+
+/* ----- Failback ----- */
+
+
+
+function realizar_failback() {
+  
+  echo "Deteniendo la replicación..."
+  mysql -u root -p$REPLICA_PASSWORD -h$REPLICA_HOST -e "STOP SLAVE"
+
+  echo "Cambiando la replicación al maestro original..."
+  mysql -u root -p$REPLICA_PASSWORD -h$REPLICA_HOST -e "CHANGE MASTER TO MASTER_HOST='$MASTER_HOST', MASTER_USER='$MASTER_USER', MASTER_PASSWORD='$MASTER_PASSWORD', MASTER_LOG_FILE='$MASTER_LOG_FILE', MASTER_LOG_POS='<span class="math-inline">MASTER\_LOG\_POS'"</0\>
+
+for replica in "</span>{REPLICAS[@]}"; do
+    echo "Actualizando configuración de replicación en réplica $replica..."
+    ssh $replica "mysql -u root -p$REPLICA_PASSWORD -e \"CHANGE MASTER TO MASTER_HOST='$MASTER_HOST', MASTER_USER='$MASTER_USER', MASTER_PASSWORD='$MASTER_PASSWORD', MASTER_LOG_FILE='$MASTER_LOG_FILE', MASTER_LOG_POS='$MASTER_LOG_
