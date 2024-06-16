@@ -16503,3 +16503,32 @@ END;
 //
 
 DELIMITER ;
+
+CREATE PROCEDURE SP_registrar_actualizacion_tabla(
+    IN p_fecha_bitacora  int,
+    IN p_usuario VARCHAR(255),
+    IN p_accion_bitacora LONGTEXT NULL,
+    IN p_hora_bitacora LONGTEXT NULL
+)
+BEGIN
+    SET @fecha_actual = NOW();
+    SET @hora_actual = TIME();
+    SET @usuario_actual = USER();
+
+    INSERT INTO tbl_bitacora (
+        usuario,
+        fecha_bitacora,
+        accion_bitacora,
+        hora_bitacora
+    )
+    VALUES (
+        @usuario_actual,
+        @fecha_actual,
+        CONCAT('Actualización en la tabla ', p_nombre_tabla, ': ID-', p_id_registro_afectado, '\nValores antes:\n', p_valores_antes, '\nValores después:\n', p_valores_despues),
+        @hora_actual
+    );
+
+END ;
+
+
+CALL registrar_actualizacion_tabla('clientes', 123, 'Nombre: Juan Pérez, Apellido: Sánchez', 'Nombre: María Pérez, Apellido: García');
