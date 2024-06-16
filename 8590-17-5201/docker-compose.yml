@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: PASSWORD_ROOT
+      MYSQL_DATABASE: examen_final
+      MYSQL_USER: USERNAME
+      MYSQL_PASSWORD: PASSWORD
+    ports:
+      - "6000:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:
+    driver: local

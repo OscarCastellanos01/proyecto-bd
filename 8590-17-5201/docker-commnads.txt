@@ -1,0 +1,8 @@
+cd C:\Users\alexr\Documents\UMG\031 - BASE DE DATOS 2\proyecto-bd\8590-17-5201
+docker-compose up -d
+docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                               NAMES
+abcdef123456   mysql:latest   "docker-entrypoint.s…"   10 seconds ago   Up 5 seconds    0.0.0.0:6000->3306/tcp, 33060/tcp   mysql_container
+mysql -h localhost -P 6000 -u USERNAME -p
+PASSWORD
+>mysql:
