@@ -6602,20 +6602,18 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE `SP_Filtrar_ControlArqueo` (
-
-p_criterio varchar(50),
-p_desde DATE,
-p_hasta DATE)
-
-	Begin 
-		SELECT * FROM tbl_ControlArqueo
-			WHERE CAST(DATE_FORMAT (fecha_control,'%Y%m%d') AS INT)
-			BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS INT)
-			AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
-			AND (id_caja) LIKE Concat('%',p_criterio,'%') 
-			AND Estado = 'Grabada';
-	end;
-//
+    IN p_criterio VARCHAR(50),
+    IN p_desde DATE,
+    IN p_hasta DATE
+)
+BEGIN
+    SELECT * FROM tbl_ControlArqueo
+    WHERE CAST(DATE_FORMAT(fecha_control, '%Y%m%d') AS UNSIGNED)
+          BETWEEN CAST(DATE_FORMAT(p_desde, '%Y%m%d') AS UNSIGNED)
+          AND CAST(DATE_FORMAT(p_hasta, '%Y%m%d') AS UNSIGNED)
+      AND id_caja LIKE CONCAT('%', p_criterio, '%')
+      AND Estado = 'Grabada';
+END //
 
 DELIMITER ;
 
@@ -11720,16 +11718,16 @@ p_hasta DATE)
 	  ingresoTarjeta_movimiento,egreso_movimiento,
 		cierre_movimiento,saldo_movimiento,estado_movimiento
 		 FROM tbl_CajaDiaria
-			WHERE CAST(DATE_FORMAT (fecha_movimiento,'%Y%m%d') AS INT)
-			BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS INT)
-			AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+			WHERE CAST(DATE_FORMAT(fecha_movimiento,'%Y%m%d') AS UNSIGNED)
+			BETWEEN CAST(DATE_FORMAT(p_desde, '%Y%m%d') AS UNSIGNED)
+			AND CAST(DATE_FORMAT(p_hasta, '%Y%m%d')AS UNSIGNED)
 		  AND id_caja = p_criterio 
 			AND estado_movimiento = 1
 			AND fecha_movimiento = (SELECT MAX(fecha_movimiento)
 																FROM tbl_CajaDiaria
-																WHERE CAST(DATE_FORMAT (fecha_movimiento,'%Y%m%d') AS INT)
-																BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS INT)
-																AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+																WHERE CAST(DATE_FORMAT (fecha_movimiento,'%Y%m%d') AS UNSIGNED)
+																BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS UNSIGNED)
+																AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 																AND id_caja = p_criterio
 															);
 	End;
@@ -11757,9 +11755,9 @@ p_hasta DATE)
 	  ingresoTarjeta_movimiento,egreso_movimiento,
 		cierre_movimiento,saldo_movimiento,estado_movimiento
 		 FROM tbl_CajaDiaria
-			WHERE CAST(DATE_FORMAT (fecha_movimiento,'%Y%m%d') AS INT)
-			BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS INT)
-			AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+			WHERE CAST(DATE_FORMAT (fecha_movimiento,'%Y%m%d') AS UNSIGNED)
+			BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS UNSIGNED)
+			AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 		  AND id_caja = p_criterio 
 			AND estado_movimiento = 1;
 	End;
@@ -16084,9 +16082,9 @@ tbl_venta.usuario_venta
 FROM
 tbl_venta
 INNER JOIN tbl_FormaPago ON tbl_venta.id_formaPago = tbl_FormaPago.id_formaPago
-WHERE CAST(DATE_FORMAT (tbl_venta.fecha_venta,'%Y%m%d') AS INT)
-BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS INT)
-AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+WHERE CAST(DATE_FORMAT (tbl_venta.fecha_venta,'%Y%m%d') AS UNSIGNED)
+BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS UNSIGNED)
+AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 AND tbl_venta.cobrado_venta = 1
 ORDER BY tbl_venta.id_venta ASC;
 END;
@@ -16111,9 +16109,9 @@ SELECT v.id_venta, v.fecha_venta, v.id_formaPago, f.descripcion_formaPago,
 v.total_venta, v.documento, v.usuario_venta
 FROM tbl_venta v
 INNER JOIN tbl_FormaPago f ON v.id_formaPago = f.id_formaPago
-WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS INT)
-BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS INT)
-AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS UNSIGNED)
+BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS UNSIGNED)
+AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 AND v.id_formaPago = 2
 AND v.cobrado_venta = 1
 ORDER BY v.id_venta;
@@ -16148,9 +16146,9 @@ tbl_venta.usuario_venta
 FROM
 tbl_venta
 INNER JOIN tbl_FormaPago ON tbl_venta.id_formaPago = tbl_FormaPago.id_formaPago
-WHERE CAST(DATE_FORMAT (tbl_venta.fecha_venta,'%Y%m%d') AS INT)
-BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS INT)
-AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+WHERE CAST(DATE_FORMAT (tbl_venta.fecha_venta,'%Y%m%d') AS UNSIGNED)
+BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS UNSIGNED)
+AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 AND tbl_venta.id_formaPago = 1
 AND tbl_venta.cobrado_venta = 1
 ORDER BY tbl_venta.id_venta ASC;
@@ -16176,9 +16174,9 @@ SELECT v.id_venta, v.fecha_venta, v.id_formaPago, f.descripcion_formaPago,
 v.total_venta, v.documento, v.usuario_venta
 FROM tbl_venta v
 INNER JOIN tbl_FormaPago f ON v.id_formaPago = f.id_formaPago
-WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS INT)
-BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS INT)
-AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS UNSIGNED)
+BETWEEN CAST(DATE_FORMAT (p_hasta, '%Y%m%d') AS UNSIGNED)
+AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 AND v.id_formaPago = 3
 AND v.cobrado_venta = 1
 ORDER BY v.id_venta;
@@ -16204,9 +16202,9 @@ SELECT v.id_venta, v.fecha_venta, v.id_formaPago, f.descripcion_formaPago,
 v.total_venta, v.documento, v.usuario_venta
 FROM tbl_venta v
 INNER JOIN tbl_FormaPago f ON v.id_formaPago = f.id_formaPago
-WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS INT)
-BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS INT)
-AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS UNSIGNED)
+BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS UNSIGNED)
+AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 AND v.id_formaPago = 5
 AND v.cobrado_venta = 1
 ORDER BY v.id_venta;
@@ -16232,9 +16230,9 @@ SELECT v.id_venta, v.fecha_venta, v.id_formaPago, f.descripcion_formaPago,
 v.total_venta, v.documento, v.usuario_venta
 FROM tbl_venta v
 INNER JOIN tbl_FormaPago f ON v.id_formaPago = f.id_formaPago
-WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS INT)
-BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS INT)
-AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS INT)
+WHERE CAST(DATE_FORMAT (V.fecha_venta,'%Y%m%d') AS UNSIGNED)
+BETWEEN CAST(DATE_FORMAT (p_desde, '%Y%m%d') AS UNSIGNED)
+AND CAST(DATE_FORMAT (p_hasta, '%Y%m%d')AS UNSIGNED)
 AND v.id_formaPago = 4
 AND v.cobrado_venta = 1
 ORDER BY v.id_venta;
